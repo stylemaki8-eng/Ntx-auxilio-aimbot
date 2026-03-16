@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="pt-br">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NTX - PREMIUM GLOW</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+        :root {
+            /* Roxo Bem Escuro */
+            --ntx-purple: #4b0082;
+            --ntx-glow: 0 0 20px rgba(75, 0, 130, 0.8);
+            --bg-dark: #050507;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background: #000; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            background-image: radial-gradient(circle at center, #100020 0%, #000 100%);
+        }
+
+        /* LOGIN */
+        .login-screen {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000;
+        }
+        .login-box {
+            background: var(--bg-dark); padding: 35px; border-radius: 20px;
+            border: 2px solid var(--ntx-purple); box-shadow: var(--ntx-glow);
+            width: 330px; text-align: center;
+        }
+        .login-box h2 { color: var(--ntx-purple); margin-bottom: 20px; text-shadow: var(--ntx-glow); letter-spacing: 3px; }
+        .key-input {
+            width: 100%; padding: 12px; background: #000; border: 1px solid var(--ntx-purple);
+            border-radius: 10px; color: #fff; text-align: center; margin-bottom: 20px; outline: none;
+            box-shadow: inset 0 0 10px rgba(75, 0, 130, 0.2);
+        }
+        .login-btn {
+            width: 100%; padding: 12px; background: var(--ntx-purple); border: none; border-radius: 10px;
+            color: white; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px var(--ntx-purple);
+        }
+
+        /* CONTAINER PRINCIPAL */
+        .container {
+            display: none; width: 400px; height: 460px; background: var(--bg-dark);
+            border-radius: 25px; border: 2px solid var(--ntx-purple);
+            box-shadow: var(--ntx-glow); overflow: hidden; animation: fadeIn 0.4s;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+        .header {
+            padding: 20px; background: rgba(75, 0, 130, 0.1); border-bottom: 2px solid var(--ntx-purple);
+            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .header h1 { font-size: 20px; color: #fff; text-shadow: var(--ntx-glow); letter-spacing: 4px; text-transform: uppercase; }
+
+        .panel-body { display: flex; height: calc(100% - 65px); }
+
+        .tabs {
+            width: 95px; background: rgba(0,0,0,0.3); border-right: 1px solid rgba(75, 0, 130, 0.3);
+            display: flex; flex-direction: column; padding-top: 15px;
+        }
+        .tab {
+            padding: 22px 0; cursor: pointer; display: flex; flex-direction: column; 
+            align-items: center; color: #444; transition: 0.3s; gap: 6px;
+        }
+        .tab i { font-size: 26px; }
+        .tab span { font-size: 10px; font-weight: bold; text-transform: uppercase; }
+        .tab.active { color: #fff; background: rgba(75, 0, 130, 0.2); border-left: 4px solid var(--ntx-purple); text-shadow: 0 0 10px var(--ntx-purple); }
+
+        .content { flex: 1; padding: 20px; overflow-y: auto; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
+        .option-card {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(75, 0, 130, 0.2);
+            padding: 12px 10px; border-radius: 12px; display: flex; align-items: center;
+            cursor: pointer; transition: 0.2s;
+        }
+        .option-card:hover { border-color: var(--ntx-purple); background: rgba(75, 0, 130, 0.1); }
+        .option-name { font-size: 10px; color: #ccc; text-transform: lowercase; font-weight: 600; flex: 1; }
+
+        .check {
+            width: 16px; height: 16px; border: 2px solid var(--ntx-purple);
+            border-radius: 4px; margin-right: 8px; position: relative; background: #000;
+        }
+        .check.active { background: var(--ntx-purple); box-shadow: 0 0 12px var(--ntx-purple); }
+        .check.active::after { content: '✓'; color: #fff; position: absolute; left: 2px; top: -3px; font-size: 12px; font-weight: bold; }
+
+        .slider-box { margin: 15px 0; padding: 12px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px solid rgba(75, 0, 130, 0.2); }
+        .slider-box label { display: block; text-align: center; color: #fff; font-weight: bold; font-size: 12px; margin-bottom: 8px; text-shadow: var(--ntx-glow); }
+        .range-input { width: 100%; accent-color: var(--ntx-purple); cursor: pointer; }
+
+        .maki-select {
+            width: 100%; padding: 12px; background: #000; border: 2px solid var(--ntx-purple);
+            border-radius: 12px; color: #fff; margin-bottom: 15px; outline: none; font-weight: bold;
+        }
+
+        .inject-btn {
+            width: 100%; padding: 16px; background: linear-gradient(45deg, #2b004d, #4b0082);
+            border: none; border-radius: 15px; color: #fff; font-weight: 900; 
+            text-transform: uppercase; cursor: pointer; box-shadow: 0 5px 20px rgba(75, 0, 130, 0.4);
+            transition: 0.3s; letter-spacing: 2px;
+        }
+        .inject-btn:active { transform: scale(0.96); }
+
+        footer { position: fixed; bottom: 20px; font-weight: 900; color: #fff; text-shadow: var(--ntx-glow); letter-spacing: 1px; }
+        footer span { color: var(--ntx-purple); }
+    </style>
+ </head>
+ <body>
+  <div class="login-screen" id="loginScreen">
+   <div class="login-box">
+    <h2>NTX</h2>
+    <input type="text" id="keyInput" class="key-input" placeholder="DIGITE A KEY X">
+    <button class="login-btn" onclick="login()">ENTRAR NO PAINEL</button>
+   </div>
+  </div>
+  <div class="container" id="mainPanel">
+   <div class="header">
+    <h1>NTX AUXÍLIO</h1>
+   </div>
+   <div class="panel-body">
+    <div class="tabs">
+     <div class="tab active" onclick="tab(this, 'aimbot')">
+      <i class="fas fa-crosshairs"></i><span>Aimbot</span>
+     </div>
+     <div class="tab" onclick="tab(this, 'info')">
+      <i class="fas fa-info-circle"></i><span>Info</span>
+     </div>
+    </div>
+    <div class="content">
+     <div id="aimbot" class="tab-content active">
+      <div class="options-grid">
+       <div class="option-card" onclick="toggle(this)">
+        <div class="check"></div>
+        <span class="option-name">Aimbot</span>
+       </div>
+       <div class="option-card" onclick="toggle(this)">
+        <div class="check"></div>
+        <span class="option-name">no recoil</span>
+       </div>
+       <div class="option-card" onclick="toggle(this)">
+        <div class="check"></div>
+        <span class="option-name">aumentar Precisão</span>
+       </div>
+       <div class="option-card" onclick="toggle(this)">
+        <div class="check"></div>
+        <span class="option-name">aim trick</span>
+       </div>
+      </div>
+      <div class="slider-box">
+       <label>FOV: [ <span id="fovVal">100</span> ]</label> <input type="range" class="range-input" min="0" max="360" value="100" oninput="document.getElementById('fovVal').innerText=this.value">
+      </div>
+      <select class="maki-select"> <option>Cabeça</option> <option selected>Pescoço</option> <option>Peito</option> </select>
+      <button class="inject-btn" onclick="inject()">Injetar Agora</button>
+     </div>
+     <div id="info" class="tab-content">
+      <p style="font-size:12px; margin-bottom:10px;">Proprietária: <b>Ntx</b></p>
+      <p style="font-size:12px; margin-bottom:10px;">Desenvolvedora: <b>Maki Style</b></p>
+      <p style="font-size:12px; margin-bottom:10px;">Status: <b style="color:#00ff88;">Online</b></p>
+      <p style="font-size:12px; color:#888;">Versão: 2.0 Dark Edition</p>
+     </div>
+    </div>
+   </div>
+  </div>
+  <footer>
+   BY <span>NTX</span>
+  </footer>
+  <script>
+        function login() {
+            if(document.getElementById('keyInput').value === "X") {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainPanel').style.display = 'block';
+            } else { alert("Key Incorreta!"); }
+        }
+
+        function tab(btn, id) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(id).classList.add('active');
+        }
+
+        function toggle(el) {
+            el.querySelector('.check').classList.toggle('active');
+        }
+
+        function inject() {
+            const btn = document.querySelector('.inject-btn');
+            btn.innerText = "INJETANDO...";
+            setTimeout(() => {
+                alert("Ntx Auxílio Injetado!");
+                btn.innerText = "CONCLUÍDO ✅";
+                window.location.href = "freefire://";
+            }, 2000);
+        }
+    </script>
+ </body>
+</html>
